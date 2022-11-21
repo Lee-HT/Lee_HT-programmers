@@ -1,6 +1,6 @@
 from collections import defaultdict,deque
 
-def dijk(road,des):
+def dijk(road,des):              #BFS 노드별 도달 시간 기록
     res = defaultdict(int)
     visited = defaultdict(bool)
     que = deque()
@@ -26,13 +26,13 @@ def solution(n, roads, sources, destination):
     
     answer = []
     
-    res = dijk(road,destination)
+    res = dijk(road,destination) #목적지를 출발지역으로 입력
     for s in sources:
-        if res[s]:
+        if res[s]:               #도달 가능시 시간 기록
             answer.append(res[s])
         else:
-            if s == destination:
+            if s == destination: #목적지 출발지 같을 때
                 answer.append(0)
-            else:
+            else:                #도달 불가능
                 answer.append(-1)
     return answer
