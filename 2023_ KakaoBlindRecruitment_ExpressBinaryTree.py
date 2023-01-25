@@ -33,7 +33,7 @@ def solution(numbers):
                     res[op] = '1'
             one = nexts                 #처리 후 one에 nexts대입
         if binc == ''.join(res):        #res와 n의 이진변환 결과를 비교
-            answer.append(1)            #같으면 1 다르면 0 answer에 
+            answer.append(1)            #같으면 1 다르면 0 answer에 저장
         else:
             answer.append(0)
     
