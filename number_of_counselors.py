@@ -1,5 +1,6 @@
 from collections import deque
 from heapq import heappop, heappush
+from itertools import combinations_with_replacement
 
 def solution(k, n, reqs):
     # 여유 멘토
@@ -21,13 +22,13 @@ def solution(k, n, reqs):
             else:
                 cons_times[i].append(0)
     
+    # case 1
+    # 1명을 추가했을 때 대기 시간이 많이 줄어드는 유형에 멘토 추가
     counts = [0 for _ in range(k)]
-    # 각 유형별로 멘토를 1명씩 추가했을 때 가장 많이 줄어드는 유형에 멘토 추가
     for i in range(mento):
         maxs = 0
         max_idx = 0
         for j in range(k):
-            # 1명 추가시 줄어드는 대기시간
             cur = cons_times[j][counts[j]]-cons_times[j][counts[j]+1]
             if maxs < cur:
                 max_idx = j
@@ -38,6 +39,15 @@ def solution(k, n, reqs):
     # 유형별 대기시간 합 계산
     for i,cons in enumerate(cons_times):
         answer += cons[counts[i]]
+    
+    # case 2
+    # 멘토의 가능한 상담 유형 조합
+    # answer = 1e+10
+    # for combi in find_combination(mento,k):
+    #     time_sum = 0
+    #     for i,c in enumerate(combi):
+    #         time_sum += cons_times[i][c]
+    #     answer = min(answer,time_sum)
     
     return answer
 
@@ -79,3 +89,14 @@ def consult(k,req):
                 heappush(heap,(cur_time+cons,0))  # 종료 시간 타임 라인 push
             
     return waiting_time
+
+    # 추가 가능한 멘토가 n명, 유형이 k개일 때 조합 
+def find_combination(n,k):
+    result = []
+    mento_type = combinations_with_replacement(range(k),n)
+    for m in mento_type:
+        combi = [0 for _ in range(k)]
+        for i in m:
+            combi[i] += 1
+        result.append(combi)
+    return result
